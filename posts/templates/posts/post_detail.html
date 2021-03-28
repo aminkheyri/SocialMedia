@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p> {{ posts.user }} | {{ posts.created|date }}</p>
+    <p>{{ posts.body }}</p>
+{% endblock %}
