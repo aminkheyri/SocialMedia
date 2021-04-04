@@ -32,7 +32,7 @@ def user_register(request):
             messages.success(request, 'Congrats You have Registered successfully', 'success')
             return redirect('posts:all_posts')
         else:
-            messages.error(request, 'somethong went ')
+            messages.error(request, 'something went wrong ')
     else:
         form = UserRegistrationForm()
     return render(request, 'account/register.html', {'form': form})
