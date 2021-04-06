@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(max_length=700)
