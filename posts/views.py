@@ -16,7 +16,7 @@ def post_detail(request, year, month, day, slug):
     return render(request, 'posts/post_detail.html', {'posts': posts})
 
 
-@login_required()
+@login_required
 def add_post(request, user_id):
     if request.user.id == user_id:
         if request.method == 'POST':
@@ -31,5 +31,15 @@ def add_post(request, user_id):
         else:
             form = AddPostForm()
         return render(request, 'posts/add_post.html', {'form': form})
+    else:
+        return redirect('posts:all_posts')
+
+
+@login_required
+def post_delete(request, user_id, post_id):
+    if user_id == request.user.id:
+        Post.objects.filter(pk=post_id).delete()
+        messages.success(request, 'Your Post Deleted Successfully', 'success')
+        return redirect('account:dashboard', user_id)
     else:
         return redirect('posts:all_posts')
