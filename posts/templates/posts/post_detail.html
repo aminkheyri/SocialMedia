@@ -3,7 +3,8 @@
 {% block content %}
     {% if request.user.is_authenticated and request.user.id == posts.user.id %}
         <a href="{% url 'posts:post_delete' posts.user.id posts.id %}">Delete Post</a>
-    {% endif %} 
+        <a href="{% url 'posts:post_edit' posts.user.id posts.id %}">Edit Post</a>
+    {% endif %}
     <p> {{ posts.user }} | {{ posts.created|date }}</p>
     <p>{{ posts.body }}</p>
 {% endblock %}
