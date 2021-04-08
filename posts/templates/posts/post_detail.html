@@ -7,4 +7,17 @@
     {% endif %}
     <p> {{ posts.user }} | {{ posts.created|date }}</p>
     <p>{{ posts.body }}</p>
+    <hr/>
+
+    {% with total=comments.count  %}
+    <p>This Post has {{ total }} Comment{{ total|pluralize }}</p>
+    {% endwith %}
+    {% for comment in comments %}
+    <div class="card bg-dark text-white">
+    <p class="card-header">{{ comment.user }}</p>
+    <p class="card-body">{{ comment.body }}</p>
+    </div><br/>
+        {% empty %}
+        <p>There is no comment</p>
+    {% endfor %}
 {% endblock %}

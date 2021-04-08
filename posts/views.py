@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import Post, Comment
 from .forms import AddPostForm, EditPostForm
 from django.contrib import messages
 from django.utils.text import slugify
@@ -13,7 +13,8 @@ def all_posts(request):
 
 def post_detail(request, year, month, day, slug):
     posts = get_object_or_404(Post, created__year=year, created__month=month, created__day=day, slug=slug )
-    return render(request, 'posts/post_detail.html', {'posts': posts})
+    comments = Comment.objects.filter(post=posts, is_reply=False)
+    return render(request, 'posts/post_detail.html', {'posts': posts, 'comments': comments})
 
 
 @login_required
