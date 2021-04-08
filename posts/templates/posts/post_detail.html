@@ -25,6 +25,13 @@
     <div class="card bg-dark text-white">
     <p class="card-header">{{ comment.user }} </p>
     <p class="card-body">{{ comment.body }}</p>
+    <div class="card-body">
+        <form action="{% url 'posts:add_reply' posts.id comment.id %}" method="post" class="col-md-6">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send" class="btn btn-primary">
+        </form>
+    </div>
     {% for reply in comment.rcomment.all %}
     <p class="bg-primary text-white p-3 m-5">{{ reply.user }} <br> {{ reply.body }} </p>
     {% endfor %}
