@@ -23,8 +23,12 @@
     {% endwith %}<br><br><br>
     {% for comment in comments %}
     <div class="card bg-dark text-white">
-    <p class="card-header">{{ comment.user }}</p>
+    <p class="card-header">{{ comment.user }} </p>
     <p class="card-body">{{ comment.body }}</p>
+    {% for reply in comment.rcomment.all %}
+    <p class="bg-primary text-white p-3 m-5">{{ reply.user }} <br> {{ reply.body }} </p>
+    {% endfor %}
+    
     </div><br/>
         {% empty %}
         <p>There is no comment</p>
