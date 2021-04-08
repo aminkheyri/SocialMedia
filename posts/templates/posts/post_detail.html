@@ -8,10 +8,19 @@
     <p> {{ posts.user }} | {{ posts.created|date }}</p>
     <p>{{ posts.body }}</p>
     <hr/>
+    {%  if request.user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send" class="btn btn-primary">
+        </form>
+        {% else %}
+        <p>Only Registered People Can Send Comments On Posts</p>
+    {% endif %}<br>
 
     {% with total=comments.count  %}
     <p>This Post has {{ total }} Comment{{ total|pluralize }}</p>
-    {% endwith %}
+    {% endwith %}<br><br><br>
     {% for comment in comments %}
     <div class="card bg-dark text-white">
     <p class="card-header">{{ comment.user }}</p>
