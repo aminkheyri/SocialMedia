@@ -1,4 +1,5 @@
 from django import forms
+from .models import Profile
 
 message = {
     'required': 'این فیلد اجباری است',
@@ -25,3 +26,9 @@ class UserRegistrationForm(forms.Form):
     password = forms.CharField(error_messages=message, max_length=60, widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'place-holder': 'Password'}
     ))
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio', 'age')

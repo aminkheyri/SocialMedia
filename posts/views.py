@@ -79,4 +79,16 @@ def post_edit(request, user_id, post_id):
 
 @login_required
 def add_reply(request, post_id, comment_id):
-    pass
+    post = get_object_or_404(Post, id=post_id)
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.method == "POST":
+        form = AddReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.user = request.user
+            reply.post = post
+            reply.reply = comment
+            reply.is_reply = True
+            reply.save()
+            messages.success(request, 'your reply submitted successfully', 'success')
+    return redirect('posts:post_detail', post.created.year, post.created.month, post.created.day, post.slug)
