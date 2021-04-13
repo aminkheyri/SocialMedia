@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserRegistrationForm, UserLoginForm, EditProfileForm, PhoneLoginForm
+from .forms import UserRegistrationForm, UserLoginForm, EditProfileForm, PhoneLoginForm, VerifyCodeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from posts.models import Post
 from django.contrib.auth.decorators import login_required
+from random import randint
+from kavenegar import *
+from .models import Profile
+from django import forms
 
 
 def user_login(request):
@@ -82,7 +86,31 @@ def edit_profile(request, user_id):
 
 def phone_login(request):
     if request.method == "POST":
-        pass
+        form = PhoneLoginForm(request.POST)
+        if form.is_valid():
+            phone = f"0{form.cleaned_data['phone']}"
+            rand_num = randint(1000, 9999)
+            api = KavenegarAPI('584D34694977644E474C64776950746533335A524B624F4A77644B314A56766956736366593077693972593D')
+            params = {'sender': '', 'receptor': phone, 'message': rand_num}
+            api.sms_send(params)
+            return redirect('account:verify', phone, rand_num)
     else:
         form = PhoneLoginForm()
     return render(request, 'account/phone_login.html', {'form': form})
+
+
+def verify(request, phone, rand_num):
+    if request.method == "POST":
+        form = VerifyCodeForm(request.POST)
+        if form.is_valid():
+            if rand_num == form.cleaned_data['code']:
+                profile = get_object_or_404(Profile, phone=phone)
+                user = get_object_or_404(User, profile__id=profile.id)
+                login(request, user)
+                messages.success(request, 'You logged in successfully', 'success')
+                return redirect('posts:all_posts')
+            else:
+                messages.error(request, 'Your Code is Wrong', 'danger')
+    else:
+        form = VerifyCodeForm()
+    return render(request, 'account/verify.html', {'form': form})
