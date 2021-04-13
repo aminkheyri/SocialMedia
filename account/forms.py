@@ -39,3 +39,7 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('bio', 'age')
+
+
+class PhoneLoginForm(forms.Form):
+    phone = forms.IntegerField()
