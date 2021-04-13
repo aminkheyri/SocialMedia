@@ -30,15 +30,15 @@ class UserRegistrationForm(forms.Form):
 
 class EditProfileForm(forms.ModelForm):
     email = forms.EmailField(max_length=50, widget=forms.EmailInput(
-        attrs={'class': 'form-control col-md-2', 'place-holder': 'Email',}))
+        attrs={'class': 'form-control col-md-2', 'place-holder': 'Email'}))
     first_name = forms.CharField(error_messages=message, max_length=25, widget=forms.TextInput(
         attrs={'class': 'form-control col-md-2', 'place-holder': 'first_name'}))
     last_name = forms.CharField(error_messages=message, max_length=25, widget=forms.TextInput(
-        attrs={'class': 'form-control col-md-2', 'place-holder': 'last_name',}))
+        attrs={'class': 'form-control col-md-2', 'place-holder': 'last_name'}))
 
     class Meta:
         model = Profile
-        fields = ('bio', 'age')
+        fields = ('bio', 'age', 'phone')
 
 
 class PhoneLoginForm(forms.Form):
