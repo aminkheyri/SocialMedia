@@ -88,18 +88,19 @@ def phone_login(request):
     if request.method == "POST":
         form = PhoneLoginForm(request.POST)
         if form.is_valid():
+            global phone, rand_num
             phone = f"0{form.cleaned_data['phone']}"
             rand_num = randint(1000, 9999)
             api = KavenegarAPI('584D34694977644E474C64776950746533335A524B624F4A77644B314A56766956736366593077693972593D')
             params = {'sender': '', 'receptor': phone, 'message': rand_num}
             api.sms_send(params)
-            return redirect('account:verify', phone, rand_num)
+            return redirect('account:verify')
     else:
         form = PhoneLoginForm()
     return render(request, 'account/phone_login.html', {'form': form})
 
 
-def verify(request, phone, rand_num):
+def verify(request):
     if request.method == "POST":
         form = VerifyCodeForm(request.POST)
         if form.is_valid():

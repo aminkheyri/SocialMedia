@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='profile',
             name='phone',
-            field=models.PositiveIntegerField(blank=True, max_length=12, null=True),
+            field=models.PositiveIntegerField(blank=True, null=True),
         ),
     ]
