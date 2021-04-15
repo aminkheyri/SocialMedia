@@ -14,9 +14,9 @@
     <p class="text-center">{{ user.profile.bio }}</p>
 
     {% if request.user.id != user.id and not is_following %}
-    <button id="following-btn" data-id="{{ user.id }}" style="display: block" class="btn btn-primary text-center mx-auto">Follow</button>
+    <button id="following_btn" data-id="{{ user.id }}" style="display: block" class="btn btn-primary text-center mx-auto">Follow</button>
     {% elif request.user.id != user.id and is_following %}
-        <button id="following-btn" data-id="{{ user.id }}" style="display: block" class="btn btn-danger text-center mx-auto">unfollow</button>
+        <button id="following_btn" data-id="{{ user.id }}" style="display: block" class="btn btn-danger text-center mx-auto">unfollow</button>
     {% endif %}
 
     <br/><br/>
